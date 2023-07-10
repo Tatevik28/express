@@ -12,40 +12,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const users_json_1 = __importDefault(require("../users.json"));
-const fs_1 = __importDefault(require("fs"));
 const NotFoundException_1 = __importDefault(require("../exceptions/NotFoundException"));
-const Users = users_json_1.default;
+const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
+const usersRepository = new UsersRepository_1.default();
 class UserService {
+    getAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield usersRepository.get();
+        });
+    }
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = data;
-            user.creation_timestamp = Date.now().toString();
-            Users.push(user);
-            this.updateJson(Users);
-            return user;
+            return yield usersRepository.create(data);
         });
     }
     update(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = Users.find(user => user.id == id);
+            const user = yield usersRepository.find(id);
             if (!user) {
-                console.log("error");
                 throw new NotFoundException_1.default("User not found");
             }
-            Object.keys(data).forEach(item => {
-                user[item] = data[item];
-            });
-            user.modification_timestamp = Date.now().toString();
-            this.updateJson(Users);
-            return user;
+            return usersRepository.update(id, data);
         });
     }
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield Users.find(user => user.id === id);
+            const user = yield usersRepository.find(id);
             if (!user) {
-                console.log("error");
                 throw new NotFoundException_1.default("User not found");
             }
             return user;
@@ -53,17 +46,19 @@ class UserService {
     }
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield Users.filter(user => user.id !== id);
-            console.log(users);
-            if (users.length === Users.length) {
-                console.log("error");
-                throw new NotFoundException_1.default("User not found");
-            }
-            return "User was successfully deleted";
+            return yield usersRepository.delete(id);
         });
     }
-    updateJson(users) {
-        fs_1.default.writeFileSync('users.json', JSON.stringify(users, null, 2));
+    activate(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield usersRepository.find(id);
+            if (!user) {
+                throw new NotFoundException_1.default("User not found");
+            }
+            user.status = true;
+            yield usersRepository.update(id, user);
+            return user;
+        });
     }
 }
 exports.default = UserService;

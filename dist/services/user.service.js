@@ -30,7 +30,6 @@ class UserService {
     }
     update(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            // console.log(Users)
             const user = Users.find(user => user.id == id);
             if (!user) {
                 console.log("error");

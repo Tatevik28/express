@@ -10,20 +10,28 @@
     },
     {
         "id": 2,
-        "name": "Artur",
+        "name": "Tato",
         "age": 35,
         "gender": "male",
         "status": false,
         "creation_timestamp": "2016-11-28T16:00:04.209Z",
-        "modification_timestamp": "2016-11-28T16:00:47.203"
+        "modification_timestamp": "1688973466783"
     },
     {
         "id": 3,
         "name": "Mane",
         "age": 9,
         "gender": "female",
-        "status": false,
+        "status": true,
         "creation_timestamp": "2016-11-28T16:12:23.777Z",
         "modification_timestamp": "2016-11-28T16:12:52.353Z"
+    },
+    {
+        "name": "Areg",
+        "id": 4,
+        "age": 35,
+        "gender": "male",
+        "status": false,
+        "creation_timestamp": "1688970605277"
     }
 ]

@@ -16,50 +16,21 @@ const UserService_1 = __importDefault(require("../services/UserService"));
 const BaseController_1 = __importDefault(require("./BaseController"));
 const usersService = new UserService_1.default();
 class UsersController extends BaseController_1.default {
-    getUser(req, res, next) {
+    getAll(req, res, next) {
         const _super = Object.create(null, {
             _return: { get: () => super._return }
         });
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield usersService.getById(parseInt(req.query.id));
-                return _super._return.call(this, res, user);
-            }
-            catch (err) {
-                console.log(5);
-                next(err);
-            }
-        });
-    }
-    updateUser(req, res, next) {
-        const _super = Object.create(null, {
-            _return: { get: () => super._return }
-        });
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const updatedUser = yield usersService.update(req.params.id, req.body);
-                return _super._return.call(this, res, updatedUser);
+                const users = yield usersService.getAll();
+                return _super._return.call(this, res, users);
             }
             catch (err) {
                 next(err);
             }
         });
     }
-    deleteUser(req, res, next) {
-        const _super = Object.create(null, {
-            _return: { get: () => super._return }
-        });
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const deletedUser = yield usersService.delete(parseInt(req.query.id));
-                return _super._return.call(this, res, deletedUser);
-            }
-            catch (err) {
-                next(err);
-            }
-        });
-    }
-    createUser(req, res, next) {
+    create(req, res, next) {
         const _super = Object.create(null, {
             _return: { get: () => super._return }
         });
@@ -67,6 +38,62 @@ class UsersController extends BaseController_1.default {
             try {
                 const createdUser = yield usersService.create(req.body);
                 return _super._return.call(this, res, createdUser);
+            }
+            catch (err) {
+                next(err);
+            }
+        });
+    }
+    get(req, res, next) {
+        const _super = Object.create(null, {
+            _return: { get: () => super._return }
+        });
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = yield usersService.getById(Number(req.params.id));
+                return _super._return.call(this, res, user);
+            }
+            catch (err) {
+                next(err);
+            }
+        });
+    }
+    update(req, res, next) {
+        const _super = Object.create(null, {
+            _return: { get: () => super._return }
+        });
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const updatedUser = yield usersService.update(Number(req.params.id), req.body);
+                return _super._return.call(this, res, updatedUser);
+            }
+            catch (err) {
+                next(err);
+            }
+        });
+    }
+    delete(req, res, next) {
+        const _super = Object.create(null, {
+            _return: { get: () => super._return }
+        });
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const deletedUser = yield usersService.delete(Number(req.params.id));
+                return _super._return.call(this, res, deletedUser);
+            }
+            catch (err) {
+                next(err);
+            }
+        });
+    }
+    activate(req, res, next) {
+        const _super = Object.create(null, {
+            _return: { get: () => super._return }
+        });
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const activatedUser = yield usersService.activate(Number(req.params.id));
+                return _super._return.call(this, res, activatedUser);
             }
             catch (err) {
                 next(err);
