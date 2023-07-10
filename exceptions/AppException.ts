@@ -1,7 +1,7 @@
 export default class AppException extends Error {
     status: number;
 
-    constructor(message, status) {
+    constructor(message: string, status: number) {
         super(message);
 
         this.name = this.constructor.name;

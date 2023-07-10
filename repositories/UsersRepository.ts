@@ -18,7 +18,8 @@ export default class UsersRepository {
             ...data,
             creation_timestamp: Date.now().toString(),
             modification_timestamp: Date.now().toString(),
-            status: false
+            status: false,
+            age: Number(data.age)
         };
 
         users.push(user);
@@ -45,6 +46,7 @@ export default class UsersRepository {
                 ...user,
                 ...data,
                 modification_timestamp: Date.now().toString(),
+                age: Number(data.age),
             };
 
             return updatedUser;

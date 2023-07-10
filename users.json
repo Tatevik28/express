@@ -9,15 +9,6 @@
     "modification_timestamp": "1688980086770"
   },
   {
-    "id": 3,
-    "name": "Mane",
-    "age": 9,
-    "gender": "female",
-    "status": true,
-    "creation_timestamp": "2016-11-28T16:12:23.777Z",
-    "modification_timestamp": "2016-11-28T16:12:52.353Z"
-  },
-  {
     "name": "Areg",
     "id": 4,
     "age": 35,

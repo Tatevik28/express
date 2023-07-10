@@ -1,6 +1,10 @@
 import AppException from "../exceptions/AppException";
+import {NextFunction, Request, Response} from "express";
 
-export default (err, req, res, next) => {
+interface IError extends Error {
+    status?: number
+}
+export default (err: IError, req: Request, res:Response, next: NextFunction) => {
     let message: string = err.message;
     let status: number = err.status;
     let stack: string = err.stack;
