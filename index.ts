@@ -1,17 +1,30 @@
 import express from "express";
 import bodyParser from "body-parser";
-
-const app = express();
-
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// routes
+import "reflect-metadata";
+import { DataSource } from "typeorm";
 import userRoute from './routes/users';
 import ErrorMiddleware from "./middlewares/ErrorMiddleware";
 import NotFoundMiddleware from "./middlewares/NotFoundMiddleware";
 import ApiKeyMiddleware from "./middlewares/ApiKeyMiddleware";
+import {User} from "./users";
+
+const app = express();
+
+export const AppDataSource = new DataSource({
+    type: "postgres",
+    host: "localhost",
+    port: 5432,
+    username: "user",
+    password: "pass",
+    database: "postgres",
+    entities: [User],
+    synchronize: true,
+    logging: false,
+})
+await AppDataSource.initialize();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use('/api', ApiKeyMiddleware, userRoute)
 

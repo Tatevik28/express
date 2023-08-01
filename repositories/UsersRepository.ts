@@ -1,8 +1,11 @@
 import {IUser} from "../interfaces/UserInterface";
 import fs from 'fs';
 import AppException from "../exceptions/AppException";
+import { AppDataSource } from "../index";
+import { User } from "../users"
 
 export default class UsersRepository {
+
     public async get(): Promise<IUser[]> {
         try {
             return JSON.parse(fs.readFileSync("users.json", "utf-8")) as IUser[];
@@ -12,21 +15,34 @@ export default class UsersRepository {
 
         return [];
     }
-    public async create(data: IUser): Promise<IUser> {
-        const users: IUser[] = await this.get();
-        const user: IUser = {
-            ...data,
-            creation_timestamp: Date.now().toString(),
-            modification_timestamp: Date.now().toString(),
-            status: false,
-            age: Number(data.age)
+    public async create(data: IUser): Promise<any> {
+        // const users: IUser[] = await this.get();
+        let user = new User();
+
+        user.name = data.name;
+        user.age = Number(data.age);
+        user.status = false;
+        user.creation_timestamp = Date.now().toString(),
+        user.modification_timestamp = Date.now().toString()
+        // user = {
+        //     ...data,
+        //     creation_timestamp: Date.now().toString(),
+        //     modification_timestamp: Date.now().toString(),
+        //     status: false,
+        //     age: Number(data.age)
+        // };
+
+        const usersRepository = AppDataSource.getRepository(User);
+        console.log(usersRepository)
+        await usersRepository.save(user);
+        // users.push(user);
+
+        // await this.updateJson(users, "Creation error");
+
+        return {
+            user,
+            usersRepository
         };
-
-        users.push(user);
-
-        await this.updateJson(users, "Creation error");
-
-        return user;
     }
 
     public async find(id: number): Promise<IUser | undefined> {
