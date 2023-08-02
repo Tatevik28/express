@@ -12,14 +12,15 @@ const app = express();
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
+    host: "postgres",
     port: 5432,
     username: "user",
     password: "pass",
     database: "postgres",
     entities: [User],
+    migrations: [User],
     synchronize: true,
-    logging: false,
+    logging: true,
 })
 
 app.use(bodyParser.urlencoded({ extended: false }));

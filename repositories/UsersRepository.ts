@@ -22,6 +22,7 @@ export default class UsersRepository {
         user.name = data.name;
         user.age = Number(data.age);
         user.status = false;
+        user.gender = "female";
         user.creation_timestamp = Date.now().toString(),
         user.modification_timestamp = Date.now().toString()
         // user = {
@@ -39,10 +40,7 @@ export default class UsersRepository {
 
         // await this.updateJson(users, "Creation error");
 
-        return {
-            user,
-            usersRepository
-        };
+        return user
     }
 
     public async find(id: number): Promise<IUser | undefined> {
