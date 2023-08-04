@@ -34,7 +34,6 @@ export default class UsersRepository {
         // };
 
         const usersRepository = AppDataSource.getRepository(User);
-        console.log(usersRepository)
         await usersRepository.save(user);
         // users.push(user);
 
@@ -44,8 +43,9 @@ export default class UsersRepository {
     }
 
     public async find(id: number): Promise<IUser | undefined> {
-        const users: IUser[] = await this.get();
-        return users.find((user) => user.id === id);
+        // const users: IUser[] = await this.get();
+        const usersRepository = AppDataSource.getRepository(User);
+        return usersRepository.findOneBy({id});
     }
 
     public async update(id: number, data: IUser): Promise<IUser | undefined> {
